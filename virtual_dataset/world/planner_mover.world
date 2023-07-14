@@ -1,0 +1,484 @@
+<?xml version="1.0"?>
+<sdf version="1.4">
+  <world name="default">
+
+    <include>
+      <uri>model://sun</uri>
+    </include>
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+    <!-- CUSTOM Ground Plane -->
+    <model name="custom_ground_plane_box">
+        <pose>0 0 0.1 0 0.0 1.45</pose>
+      <link name="sp_link">
+        <inertial>
+          <pose>0 0 0 0 0 0</pose>
+          <mass>10</mass>
+          <inertia>
+            <ixx>3.33341666667e+3</ixx>
+            <ixy>0.0</ixy>
+            <ixz>0.0</ixz>
+            <iyy>3.33341666667e+3</iyy>
+            <iyz>0.0</iyz>
+            <izz>6.66666666667e+3</izz>
+          </inertia>
+        </inertial>
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.1 0.1 0.2</size>
+            </box>
+          </geometry>
+          <surface>
+              <friction>
+                <ode>
+                  <mu>0.5</mu>
+                  <mu2>0.5</mu2>
+                </ode>
+              </friction>
+            </surface>
+        </collision>
+
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.1 0.1 0.2</size>
+            </box>
+          </geometry>
+          <material>
+              <script>
+                <uri>file://media/materials/scripts/gazebo.material</uri>
+                <name>Gazebo/Green</name>
+              </script>
+            </material>
+        </visual>
+        <gravity>0</gravity>
+      </link>
+      <!-- <plugin name="diff_steer_plugin" filename="libdiff_steer_plugin.so"/> -->
+      <plugin name="car_steer_plugin" filename="libcar_steer_plugin.so"/>
+      <!-- <plugin name="motion_test_plugin" filename="libmotion_test_plugin.so"/> -->
+      <sensor name="imu_sensor" type="imu">
+        <always_on>true</always_on>
+        <update_rate>200</update_rate>
+        <visualize>false</visualize>
+        <topic>/imu/data</topic>
+        <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
+          <topicName>/imu/data</topicName>
+          <bodyName>sp_link</bodyName>
+          <updateRateHZ>200</updateRateHZ>
+          <gaussianNoise>0.0</gaussianNoise>
+          <xyzOffset>0 0 0</xyzOffset>
+          <rpyOffset>0 0 0</rpyOffset>
+          <frameName>sp_link</frameName>
+          <initialOrientationAsReference>true</initialOrientationAsReference>
+        </plugin>
+        <pose>0 0 0 0 0 0</pose>
+      </sensor>
+    </model>
+
+  <model name="box1">
+      <pose>0.326587 2.00099 0.5 0 0 1.29183</pose>
+      <link name="link">
+        <inertial>
+          <pose>0 0 0 0 0 0</pose>
+          <mass>10</mass>
+          <inertia>
+            <ixx>3.33341666667e+3</ixx>
+            <ixy>3.33341666667e+3</ixy>
+            <ixz>0.0</ixz>
+            <iyy>3.33341666667e+3</iyy>
+            <iyz>0.0</iyz>
+            <izz>6.66666666667e+3</izz>
+          </inertia>
+        </inertial>
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.5 0.5 1.0</size>
+            </box>
+          </geometry>
+          <surface>
+              <contact>
+                <collide_without_contact>true</collide_without_contact>
+              </contact>
+            </surface>
+        </collision>
+
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.5 0.5 1.0</size>
+            </box>
+          </geometry>
+          <material>
+              <script>
+                <uri>file://media/materials/scripts/gazebo.material</uri>
+                <name>Gazebo/Green</name>
+              </script>
+            </material>
+        </visual>
+        <gravity>0</gravity>
+      </link>
+    </model>
+
+    <model name="box2">
+        <pose>1.22437 3.67339 0.5 0 0 0.888099</pose>
+      <link name="link">
+        <inertial>
+          <pose>0 0 0 0 0 0</pose>
+          <mass>10</mass>
+          <inertia>
+            <ixx>3.33341666667e+3</ixx>
+            <ixy>3.33341666667e+3</ixy>
+            <ixz>0.0</ixz>
+            <iyy>3.33341666667e+3</iyy>
+            <iyz>0.0</iyz>
+            <izz>6.66666666667e+3</izz>
+          </inertia>
+        </inertial>
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.5 0.5 1.0</size>
+            </box>
+          </geometry>
+          <surface>
+              <contact>
+              <collide_without_contact>true</collide_without_contact>
+            </contact>
+            </surface>
+        </collision>
+
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.5 0.5 1.0</size>
+            </box>
+          </geometry>
+          <material>
+              <script>
+                <uri>file://media/materials/scripts/gazebo.material</uri>
+                <name>Gazebo/Green</name>
+              </script>
+            </material>
+        </visual>
+        <gravity>0</gravity>
+      </link>
+    </model>
+
+    <model name="box3">
+        <pose>2.70626 5.19637 0.5 0 0 0.757121</pose>
+      <link name="link">
+        <inertial>
+          <pose>0 0 0 0 0 0</pose>
+          <mass>10</mass>
+          <inertia>
+            <ixx>3.33341666667e+3</ixx>
+            <ixy>3.33341666667e+3</ixy>
+            <ixz>0.0</ixz>
+            <iyy>3.33341666667e+3</iyy>
+            <iyz>0.0</iyz>
+            <izz>6.66666666667e+3</izz>
+          </inertia>
+        </inertial>
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.5 0.5 1.0</size>
+            </box>
+          </geometry>
+          <surface>
+              <contact>
+              <collide_without_contact>true</collide_without_contact>
+            </contact>
+            </surface>
+        </collision>
+
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.5 0.5 1.0</size>
+            </box>
+          </geometry>
+          <material>
+              <script>
+                <uri>file://media/materials/scripts/gazebo.material</uri>
+                <name>Gazebo/Green</name>
+              </script>
+            </material>
+        </visual>
+        <gravity>0</gravity>
+      </link>
+    </model>
+
+    <model name="box4">
+        <pose>4.4406 6.43886 0.5 0 0 0.315998</pose>
+      <link name="link">
+        <inertial>
+          <pose>0 0 0 0 0 0</pose>
+          <mass>10</mass>
+          <inertia>
+            <ixx>3.33341666667e+3</ixx>
+            <ixy>3.33341666667e+3</ixy>
+            <ixz>0.0</ixz>
+            <iyy>3.33341666667e+3</iyy>
+            <iyz>0.0</iyz>
+            <izz>6.66666666667e+3</izz>
+          </inertia>
+        </inertial>
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.5 0.5 1.0</size>
+            </box>
+          </geometry>
+          <surface>
+              <contact>
+              <collide_without_contact>true</collide_without_contact>
+            </contact>
+            </surface>
+        </collision>
+
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.5 0.5 1.0</size>
+            </box>
+          </geometry>
+          <material>
+              <script>
+                <uri>file://media/materials/scripts/gazebo.material</uri>
+                <name>Gazebo/Green</name>
+              </script>
+            </material>
+        </visual>
+        <gravity>0</gravity>
+      </link>
+    </model>
+
+    <model name="box5">
+        <pose>6.00457 5.81569 0.5 0 0 -0.894097</pose>
+      <link name="link">
+        <inertial>
+          <pose>0 0 0 0 0 0</pose>
+          <mass>10</mass>
+          <inertia>
+            <ixx>3.33341666667e+3</ixx>
+            <ixy>3.33341666667e+3</ixy>
+            <ixz>0.0</ixz>
+            <iyy>3.33341666667e+3</iyy>
+            <iyz>0.0</iyz>
+            <izz>6.66666666667e+3</izz>
+          </inertia>
+        </inertial>
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.5 0.5 1.0</size>
+            </box>
+          </geometry>
+          <surface>
+              <contact>
+              <collide_without_contact>true</collide_without_contact>
+            </contact>
+            </surface>
+        </collision>
+
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.5 0.5 1.0</size>
+            </box>
+          </geometry>
+          <material>
+              <script>
+                <uri>file://media/materials/scripts/gazebo.material</uri>
+                <name>Gazebo/Green</name>
+              </script>
+            </material>
+        </visual>
+        <gravity>0</gravity>
+      </link>
+    </model> 
+    
+    <model name="box6">
+        <pose>7.12597 3.51653 0.5 0 0 -1.26047</pose>
+      <link name="link">
+        <inertial>
+          <pose>0 0 0 0 0 0</pose>
+          <mass>10</mass>
+          <inertia>
+            <ixx>3.33341666667e+3</ixx>
+            <ixy>3.33341666667e+3</ixy>
+            <ixz>0.0</ixz>
+            <iyy>3.33341666667e+3</iyy>
+            <iyz>0.0</iyz>
+            <izz>6.66666666667e+3</izz>
+          </inertia>
+        </inertial>
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.5 0.5 1.0</size>
+            </box>
+          </geometry>
+          <surface>
+              <contact>
+              <collide_without_contact>true</collide_without_contact>
+            </contact>
+            </surface>
+        </collision>
+
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.5 0.5 1.0</size>
+            </box>
+          </geometry>
+          <material>
+              <script>
+                <uri>file://media/materials/scripts/gazebo.material</uri>
+                <name>Gazebo/Green</name>
+              </script>
+            </material>
+        </visual>
+        <gravity>0</gravity>
+      </link>
+    </model> 
+    <model name="box7">
+        <pose>7.64111 1.05673 0.5 0 0 -1.49301</pose>
+      <link name="link">
+        <inertial>
+          <pose>0 0 0 0 0 0</pose>
+          <mass>10</mass>
+          <inertia>
+            <ixx>3.33341666667e+3</ixx>
+            <ixy>3.33341666667e+3</ixy>
+            <ixz>0.0</ixz>
+            <iyy>3.33341666667e+3</iyy>
+            <iyz>0.0</iyz>
+            <izz>6.66666666667e+3</izz>
+          </inertia>
+        </inertial>
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.5 0.5 1.0</size>
+            </box>
+          </geometry>
+          <surface>
+              <contact>
+              <collide_without_contact>true</collide_without_contact>
+            </contact>
+            </surface>
+        </collision>
+
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.5 0.5 1.0</size>
+            </box>
+          </geometry>
+          <material>
+              <script>
+                <uri>file://media/materials/scripts/gazebo.material</uri>
+                <name>Gazebo/Green</name>
+              </script>
+            </material>
+        </visual>
+        <gravity>0</gravity>
+      </link>
+    </model> 
+    <model name="box8">
+        <pose>7.38865 -0.0293316 0.5 0 0 3.0413</pose>
+      <link name="link">
+        <inertial>
+          <pose>0 0 0 0 0 0</pose>
+          <mass>10</mass>
+          <inertia>
+            <ixx>3.33341666667e+3</ixx>
+            <ixy>3.33341666667e+3</ixy>
+            <ixz>0.0</ixz>
+            <iyy>3.33341666667e+3</iyy>
+            <iyz>0.0</iyz>
+            <izz>6.66666666667e+3</izz>
+          </inertia>
+        </inertial>
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.5 0.5 1.0</size>
+            </box>
+          </geometry>
+          <surface>
+              <contact>
+              <collide_without_contact>true</collide_without_contact>
+            </contact>
+            </surface>
+        </collision>
+
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.5 0.5 1.0</size>
+            </box>
+          </geometry>
+          <material>
+              <script>
+                <uri>file://media/materials/scripts/gazebo.material</uri>
+                <name>Gazebo/Green</name>
+              </script>
+            </material>
+        </visual>
+        <gravity>0</gravity>
+      </link>
+      
+    </model> 
+    <model name="box9">
+        <pose>6.35246 1.00518 0.5 0 0 2.21321</pose>
+      <link name="link">
+        <inertial>
+          <pose>0 0 0 0 0 0</pose>
+          <mass>10</mass>
+          <inertia>
+            <ixx>3.33341666667e+3</ixx>
+            <ixy>3.33341666667e+3</ixy>
+            <ixz>0.0</ixz>
+            <iyy>3.33341666667e+3</iyy>
+            <iyz>0.0</iyz>
+            <izz>6.66666666667e+3</izz>
+          </inertia>
+        </inertial>
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.5 0.5 1.0</size>
+            </box>
+          </geometry>
+          <surface>
+              <contact>
+              <collide_without_contact>true</collide_without_contact>
+            </contact>
+            </surface>
+        </collision>
+
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.5 0.5 1.0</size>
+            </box>
+          </geometry>
+          <material>
+              <script>
+                <uri>file://media/materials/scripts/gazebo.material</uri>
+                <name>Gazebo/Green</name>
+              </script>
+            </material>
+        </visual>
+        <gravity>0</gravity>
+      </link> 
+    </model> 
+    
+  </world>
+</sdf>
