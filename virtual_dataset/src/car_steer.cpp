@@ -168,8 +168,6 @@ namespace gazebo
     double last_angle = 0.0;
 
     Eigen::Matrix4d Q_lqr;
-    Eigen::Matrix4d Q_lqr_p;
-    double R_p = 1.0;
     double R_1 = 20*system_speed;
 
     int last_ind = 0;
