@@ -1,12 +1,11 @@
-"""
-Cubic Spline library on python
-author Atsushi Sakai
-"""
 import bisect
 import math
 
 import numpy as np
 import occupied_grids as og
+
+input_x = [0.0, 0.0,-2.0,-4.2,-5.0,-4.0,-1.3, 0.0, 0.0,-1.0,-3.0,-6.0,-6.7,-6.0,-3.0,-2.0, 0.0, 2.0, 2.5, 6.0, 7.0, 6.5, 6.0, 4.0, 2.7, 2.0, 0.0, 0.0]
+input_y = [0.0, 2.0, 3.2, 3.2, 2.0, 1.0, 1.0, 0.0,-1.0,-1.8,-2.0,-2.2,-2.9,-3.6,-3.5,-2.0,-1.5,-1.5,-3.7,-4.0,-3.7,-3.5,-3.9,-4.0,-3.7,-2.0,-1.0, 0.0]
 
 class Spline:
     """
@@ -211,13 +210,6 @@ def calc_2d_spline_interpolation(x, y, ds=0.1, num=100):
 def test_spline2d():
     print("Spline 2D test")
     import matplotlib.pyplot as plt
-    # input_x = [0.0, 0.2, 0.0,-0.2, 0.0]
-    # input_y = [0.0, 2.1, 4.0, 2.1, 0.0]
-    # input_x = [0.0, 1.0, 2.0, 3.0, 4.0]
-    # input_y = [0.0, 1.0, 0.0,-1.0, 0.0]
-    input_x = [0.0, 0.0,-2.0,-4.2,-5.0,-4.0,-1.3, 0.0, 0.0,-1.0,-3.0,-6.0,-6.7,-6.0,-3.0,-2.0, 0.0, 2.0, 2.5, 6.0, 7.0, 6.5, 6.0, 4.0, 2.7, 2.0, 0.0, 0.0]
-    input_y = [0.0, 2.0, 3.2, 3.2, 2.0, 1.0, 1.0, 0.0,-1.0,-1.8,-2.0,-2.2,-2.9,-3.6,-3.5,-2.0,-1.5,-1.5,-3.7,-4.0,-3.7,-3.5,-3.9,-4.0,-3.7,-2.0,-1.0, 0.0]
-
     x, y, yaw, k, travel = calc_2d_spline_interpolation(input_x, input_y, num=200)
 
     plt.subplots(1)

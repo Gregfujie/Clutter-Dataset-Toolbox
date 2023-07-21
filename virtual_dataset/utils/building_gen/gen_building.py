@@ -17,7 +17,8 @@ model.static = True
 model.self_collide = False
 model.allow_auto_disable = True
 
-save_path = "/home/greg/.gazebo/models/" + model.name
+path = "/home/greg/.gazebo/models/"
+save_path = path + model.name
 
 for i in range(len(walls)):
 
@@ -95,7 +96,7 @@ else:
 
     print("export success")
 
-save_path_ceiling = "/home/greg/.gazebo/models/" + ceiling.name
+save_path_ceiling = path + ceiling.name
 
 sdf_ceiling = create_sdf_element('sdf')
 sdf_ceiling.reset('model')
