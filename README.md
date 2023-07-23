@@ -2,7 +2,9 @@
 
 This is a clutter dataset toolbox. 
 
-This toolbox is part of [FP-Loc 2.0](https://fplocextension.github.io). This toolbox integrates a pipeline that transforms a floor plan into an indoor lidar point cloud dataset with clutter, including: 
+This toolbox is part of [FP-Loc 2.0](https://fplocextension.github.io). 
+
+This toolbox integrates a pipeline that transforms a floor plan into an indoor lidar point cloud dataset with clutter, including: 
 - Converting from svg format to 3D model in Gazebo.
 - Generating trajectory according to landmarks in the model.
 - Generating clutters and detecting collision.
@@ -21,9 +23,9 @@ FloorplanTransformation into a model in Gazebo. FloorplanTransformation is a met
 For your convenience, we also provide a file that generates a Gazebo world model, located at `utils/building_gen/gen_world.py`. If you use this tool, please run `utils/building_gen/gen_building.py` firstly.
 
 ### Generating Clutters and Detecting Collision
-The location of this tool is `virtual_dataset/utils/obj_gen/`. Please download [pcg_gazebo](https://github.com/boschresearch/pcg_gazebo) and [matplotlib](https://matplotlib.org/) in advance, and rewrite the path and landmarks options in the file. 
+The location of this tool is `utils/obj_gen/`. Please download [pcg_gazebo](https://github.com/boschresearch/pcg_gazebo) and [matplotlib](https://matplotlib.org/) in advance, and rewrite the path and landmarks options in the file. 
 
-We used some furniture models provided by Gazebo and some self-made models, located in `temp`, please place them under the `~/.gazebo/` folder.
+We used some furniture models provided by Gazebo and some self-made models, located in `models/`, please place them under the `~/.gazebo/` folder.
 
 - `ceiling.py` generates clutter on the ceiling, such as cylindrical and cubic clutter, to simulate furniture such as lamps.
 - `ground.py` generates clutter on the ground. The clutter on the ground satisfies two constraints, perpendicular to the ground and not overlapping with each other. Here we use the official gazebo models of tables, chairs and other furniture as clutter.
@@ -45,5 +47,5 @@ Enter your catkin workspace and execute following command:
 ```
 
 ## Ackonwledgement
-Our algorithm for generating trajectories borrowed a lot of code from [CubicSpline](https://github.com/AtsushiSakai/CubicSpline).
+Our algorithm for generating trajectories borrows a lot of code from [CubicSpline](https://github.com/AtsushiSakai/CubicSpline).
 
