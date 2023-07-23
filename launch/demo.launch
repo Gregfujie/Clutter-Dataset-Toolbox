@@ -6,7 +6,7 @@
   <arg name="headless" default="false"/>
   <arg name="debug" default="false"/>
   <arg name="verbose" default="false"/>
-  <arg name="world_name" default="$(find plannar_mover)/world/room1.world"/>
+  <arg name="world_name" default="$(find virtual_dataset)/world/room1.world"/>
 
   <arg name="x" default="0.0"/>
   <arg name="y" default="0.0"/>
@@ -29,7 +29,7 @@
     <!-- Spawn the example robot -->
   <arg name="gpu" default="true"/>
   <arg name="organize_cloud" default="false"/>
-  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find ouster_description)/urdf/demo.urdf.xacro' organize_cloud:=$(arg organize_cloud) gpu:=$(arg gpu)" />
+  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find virtual_dataset)/urdf/demo.urdf.xacro' organize_cloud:=$(arg organize_cloud) gpu:=$(arg gpu)" />
   <node pkg="gazebo_ros" type="spawn_model" name="spawn_model" args="-urdf -param /robot_description -model dem -gazebo_namespace /gazebo 
               -x $(arg x) -y $(arg y) -z $(arg z)
               -R $(arg roll) -P $(arg pitch) -Y $(arg yaw)"/>

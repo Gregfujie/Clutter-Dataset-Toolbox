@@ -43,7 +43,7 @@ Enter your catkin workspace and execute following command:
  catkin_make
  source ~/catkin_ws/devel/setup.bash
  # run
- roslaunch test_mover demo.launch
+ roslaunch virtual_dataset demo.launch
 ```
 
 ## Ackonwledgement

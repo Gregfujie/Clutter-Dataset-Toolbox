@@ -24,6 +24,7 @@ namespace gazebo
 {
   class CarSteer : public ModelPlugin
   {
+
     public: void Load(physics::ModelPtr _parent, sdf::ElementPtr /*_sdf*/)
     {
       // Store the pointer to the model
@@ -304,7 +305,25 @@ namespace gazebo
       ofs <<timestamp<<" "<<result[0]<<" "<<result[1]<<" "<<result[2]<<" "<<q.X()<<" "<<q.Y()<<" "<<q.Z()<<" "<<q.W()<< endl;
       ofs.close();
     }
+    void MoveModelsPlane(float linear_x_vel, float linear_y_vel, float linear_z_vel, float angular_x_vel, float angular_y_vel, float angular_z_vel)
+    {
+
+        std::string model_name = this->model->GetName();
+
+        ROS_DEBUG("Moving model=%s",model_name.c_str());
+
+        this->model->SetLinearVel(ignition::math::Vector3d(linear_x_vel, linear_y_vel, linear_z_vel));
+        this->model->SetAngularVel(ignition::math::Vector3d(angular_x_vel, angular_y_vel, angular_z_vel));
+
+        ROS_DEBUG("Moving model=%s....END",model_name.c_str());
+
+    }
     
+    public: void OnRosMsg_Pos(const geometry_msgs::TwistConstPtr &_msg)
+    {
+        this->MoveModelsPlane(_msg->linear.x, _msg->linear.y,_msg->linear.z, _msg->angular.x, _msg->angular.y, _msg->angular.z);
+    }
+     
     /// \brief ROS helper function that processes messages
     private: void QueueThread()
     {

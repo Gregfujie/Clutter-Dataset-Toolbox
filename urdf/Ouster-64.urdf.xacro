@@ -1,0 +1,204 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="Ouster-64">
+  <xacro:property name="M_PI" value="3.1415926535897931" />
+  <xacro:macro name="Ouster-64" params="*origin parent:=base_link name:=ouster topic:=/ouster_points topic_imu:=/ouster_imu organize_cloud:=false hz:=10 lasers:=64 samples:=2048 collision_range:=0.3 min_range:=0.9 max_range:=75.0 noise:=0.008 min_angle:=-${M_PI} max_angle:=${M_PI} gpu:=false">
+
+    <joint name="${name}_base_mount_joint" type="fixed">
+      <xacro:insert_block name="origin" /> 
+      <parent link="${parent}"/>
+      <child link="${name}_base_link"/>
+    </joint>
+
+    <link name="${name}_base_link">
+      <inertial>
+        <mass value="0.83"/>
+        <origin xyz="0 0 0.03585"/>
+        <inertia ixx="${(0.83 * (3.0*0.0516*0.0516 + 0.0717*0.0717)) / 12.0}" ixy="0" ixz="0"
+          iyy="${(0.83 * (3.0*0.0516*0.0516 + 0.0717*0.0717)) / 12.0}" iyz="0"
+          izz="${0.5 * 0.83 * (0.0516*0.0516)}"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="package://virtual_dataset/meshes/Ouster64_base_1.dae" />
+        </geometry>
+      </visual>
+      <visual>
+        <geometry>
+          <mesh filename="package://virtual_dataset/meshes/Ouster64_base_2.dae" />
+        </geometry>
+      </visual>
+      <collision>
+        <origin rpy="0 0 0" xyz="0 0 0.03585"/>
+        <geometry>
+          <cylinder radius="0.0516" length="0.0717"/>
+        </geometry>
+      </collision>
+      <selfCollide>false</selfCollide>
+    </link>
+
+    <joint name="${name}_base_scan_joint" type="fixed" >
+      <origin xyz="0 0 0.0377" rpy="0 0 0" />
+      <parent link="${name}_base_link" />
+      <child link="${name}"/>
+    </joint>
+
+    <link name="${name}">
+      <inertial>
+        <mass value="0.01"/>
+        <origin xyz="0 0 0"/>
+        <inertia ixx="1e-7" ixy="0" ixz="0" iyy="1e-7" iyz="0" izz="1e-7"/>
+      </inertial>
+      <visual>
+        <origin xyz="0 0 -0.0377" />
+        <geometry>
+          <mesh filename="package://virtual_dataset/meshes/Ouster64_scan.dae" />
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <sphere radius="0"/>
+        </geometry>
+      </collision>
+      <selfCollide>false</selfCollide>
+    </link>
+
+    <!-- Gazebo requires the ouster_gazebo_plugins package -->
+    <gazebo reference="${name}">
+      <xacro:if value="${gpu}">
+        <sensor type="gpu_ray" name="${name}-Ouster64">
+          <pose>0 0 0 0 0 0</pose>
+          <visualize>false</visualize>
+          <update_rate>${hz}</update_rate>
+          <ray>
+            <scan>
+              <horizontal>
+                <samples>${samples}</samples>
+                <resolution>1</resolution>
+                <min_angle>${min_angle}</min_angle>
+                <max_angle>${max_angle}</max_angle>
+              </horizontal>
+              <vertical>
+                <samples>${lasers}</samples>
+                <resolution>1</resolution>
+                <min_angle>-${22.5*M_PI/180.0}</min_angle>
+                <max_angle> ${22.5*M_PI/180.0}</max_angle>
+              </vertical>
+            </scan>
+            <range>
+              <min>${collision_range}</min>
+              <max>${max_range+1}</max>
+              <resolution>0.001</resolution>
+            </range>
+            <noise>
+              <type>gaussian</type>
+              <mean>0.0</mean>
+              <stddev>0.0</stddev>
+            </noise>
+          </ray>
+          <plugin name="gazebo_ros_laser_controller" filename="libgazebo_ros_ouster_gpu_laser.so">
+            <topicName>${topic}</topicName>
+            <frameName>temp</frameName>
+            <organize_cloud>${organize_cloud}</organize_cloud>
+            <min_range>${min_range}</min_range>
+            <max_range>${max_range}</max_range>
+            <gaussianNoise>${noise}</gaussianNoise>
+          </plugin>
+        </sensor>
+      </xacro:if>
+      <xacro:unless value="${gpu}">
+        <sensor type="ray" name="${name}-Ouster64">
+          <pose>0 0 0 0 0 0</pose>
+          <visualize>false</visualize>
+          <update_rate>${hz}</update_rate>
+          <ray>
+            <scan>
+              <horizontal>
+                <samples>${samples}</samples>
+                <resolution>1</resolution>
+                <min_angle>${min_angle}</min_angle>
+                <max_angle>${max_angle}</max_angle>
+              </horizontal>
+              <vertical>
+                <samples>${lasers}</samples>
+                <resolution>1</resolution>
+                <min_angle>-${22.5*M_PI/180.0}</min_angle>
+                <max_angle> ${22.5*M_PI/180.0}</max_angle>
+              </vertical>
+            </scan>
+            <range>
+              <min>${collision_range}</min>
+              <max>${max_range+1}</max>
+              <resolution>0.001</resolution>
+            </range>
+            <noise>
+              <type>gaussian</type>
+              <mean>0.0</mean>
+              <stddev>0.008</stddev>
+            </noise>
+          </ray>
+          <plugin name="gazebo_ros_laser_controller" filename="libgazebo_ros_ouster_laser.so">
+            <topicName>${topic}</topicName>
+            <frameName>temp</frameName>
+            <organize_cloud>${organize_cloud}</organize_cloud>
+            <min_range>${min_range}</min_range>
+            <max_range>${max_range}</max_range>
+            <gaussianNoise>${noise}</gaussianNoise>
+          </plugin>
+        </sensor>
+      </xacro:unless>
+    </gazebo>
+
+    <!-- <gazebo>
+    <plugin name="imu_controller" filename="libhector_gazebo_ros_imu.so">
+      <gravity>true</gravity>
+      <alwayson>true</alwayson>
+      <robotNamespace>/</robotNamespace>
+      <updateRate>100.0</updateRate> 
+      <bodyName>${name}_base_link</bodyName>
+      <topicName>${topic_imu}</topicName>
+      <accelDrift>0.005 0.005 0.005</accelDrift>
+      <accelGaussianNoise>0.005 0.005 0.005</accelGaussianNoise>
+      <rateDrift>0.005 0.005 0.005 </rateDrift>
+      <rateGaussianNoise>0.005 0.005 0.005 </rateGaussianNoise>
+      <headingDrift>0.005</headingDrift>
+      <headingGaussianNoise>0.005</headingGaussianNoise>
+    </plugin>
+  </gazebo> -->
+
+  <gazebo reference="${name}_base_link">
+      <gravity>true</gravity>
+      <sensor name="imu_sensor" type="imu">
+          <always_on>true</always_on>
+          <update_rate>200</update_rate>
+          <visualize>false</visualize>
+          <topic>${topic_imu}</topic>
+          <!-- <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
+              <topicName>${topic_imu}</topicName>
+              <bodyName>${name}_base_link</bodyName>
+              <updateRateHZ>200.0</updateRateHZ>
+              <gaussianNoise>0</gaussianNoise>
+              <xyzOffset>0 0 0</xyzOffset>     
+              <rpyOffset>0 0 0</rpyOffset>
+              <frameName>temp</frameName>  
+              <initialOrientationAsReference>false</initialOrientationAsReference>      
+          </plugin> -->
+          <plugin filename="libimu9dof.so" name="imu_plugin">
+              <topicName>${topic_imu}</topicName>
+              <bodyName>${name}_base_link</bodyName>
+              <updateRateHZ>200.0</updateRateHZ>
+              <gaussianNoise>0.005</gaussianNoise>
+              <NoiseDensityAccel>3.9939570888238808e-03</NoiseDensityAccel>
+              <NoiseDensityGyro>1.5636343949698187e-03</NoiseDensityGyro>
+              <RandomWalkAccel>6.4356659353532566e-05</RandomWalkAccel>
+              <RandomWalkGyro>3.5640318696367613e-05</RandomWalkGyro>
+              <xyzOffset>0 0 0</xyzOffset>     
+              <rpyOffset>0 0 0</rpyOffset>
+              <frameName>temp</frameName>  
+              <initialOrientationAsReference>false</initialOrientationAsReference>      
+          </plugin>
+          <pose>0 0 0 0 0 0</pose>
+      </sensor>
+  </gazebo>
+
+  </xacro:macro>
+</robot>

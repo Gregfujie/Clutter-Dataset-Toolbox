@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="demo">
+  <!-- define some parameters -->
+  <xacro:arg name="gpu" default="false"/>
+  <xacro:property name="gpu" value="$(arg gpu)" />
+
+  <xacro:arg name="organize_cloud" default="false"/>
+  <xacro:property name="organize_cloud" value="$(arg organize_cloud)" />
+
+  <!-- Base Footprint -->
+
+  <!-- Base Link -->
+  <!-- <joint name="footprint" type="fixed" >
+   <parent link="base_footprint" />
+    <child link="base_link" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint> -->
+  <!-- link(or say an obejct) -->
+  <link name="base_link" >
+    <pose xyz="0 0 0.5" rpy="0 0 0" />
+    <visual>
+      <geometry>
+        <box size="0.15 0.1 0.05" />
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.15 0.1 0.05" />
+      </geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0 0"/>
+      <mass value="10"/>
+      <inertia ixx="3.0" ixy="0.0" ixz="0.0"
+               iyy="3.0" iyz="0.0" 
+               izz="3.0" />
+    </inertial>
+    <gazebo reference="base_footprint">
+    <gravity>0</gravity>
+    </gazebo>
+    <selfCollide>false</selfCollide>
+  </link>
+  
+  <gazebo reference="base_footprint">
+    <turnGravityOff>true</turnGravityOff>
+  </gazebo>
+  <!-- plugin, a model plugin as it is on a robot model -->
+  <gazebo>
+    <!-- <plugin name="plannar_mover_plugin" filename="libplannar_mover_plugin.so"/> -->
+    <plugin name="car_steer_plugin" filename="libcar_steer_plugin.so"/>
+    <!-- <plugin name="motion_test_plugin" filename="libmotion_test_plugin.so"/> -->
+  </gazebo>
+
+  <!-- a way to add another model in current model -->
+  <xacro:include filename="$(find virtual_dataset)/urdf/Ouster-64.urdf.xacro"/>
+  <xacro:Ouster-64 parent="base_link" name="ouster" topic="/ouster_points" organize_cloud="${organize_cloud}" hz="10" samples="2048" gpu="${gpu}">
+    <origin xyz="0 0 0.1" rpy="0 0 0" />
+  </xacro:Ouster-64>
+
+</robot>

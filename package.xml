@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>test_mover</name>
+  <name>virtual_dataset</name>
   <version>0.0.0</version>
-  <description>The test_mover package</description>
+  <description>The virtual_dataset package</description>
   <maintainer email="asd@asd.asd">asd</maintainer>
   <license>TODO</license>
 
