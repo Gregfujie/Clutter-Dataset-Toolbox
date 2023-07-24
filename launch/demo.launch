@@ -6,7 +6,7 @@
   <arg name="headless" default="false"/>
   <arg name="debug" default="false"/>
   <arg name="verbose" default="false"/>
-  <arg name="world_name" default="$(find virtual_dataset)/world/room1.world"/>
+  <arg name="world_name" default="$(find virtual_dataset)/world/chaotic_room.world"/>
 
   <arg name="x" default="0.0"/>
   <arg name="y" default="0.0"/>
